@@ -17,10 +17,28 @@ export function LatestProductCard({
   className,
   labelPosition = 'bottom-right',
 }: LatestProductCardProps) {
+  // Clone the product and remove thumbhash from featuredImage and images
+  const { featuredImage, images, ...rest } = product;
+  const cleanFeaturedImage = featuredImage
+    ? { ...featuredImage, thumbhash: undefined }
+    : undefined;
+  const cleanImages = Array.isArray(images)
+    ? images.map(img => ({ ...img, thumbhash: undefined }))
+    : images;
+  console.log({
+    ...rest,
+    featuredImage: cleanFeaturedImage,
+    images: cleanImages,
+  });
+
   if (principal) {
     return (
       <div className={cn('min-h-fold flex flex-col relative', className)}>
-        <Link href={`/product/${product.handle}`} className="size-full flex-1 flex flex-col" prefetch>
+        <Link
+          href={`/product/${product.handle}`}
+          className="size-full flex-1 flex flex-col"
+          prefetch
+        >
           <Image
             priority
             src={product.featuredImage.url}
@@ -44,7 +62,11 @@ export function LatestProductCard({
 
   return (
     <div className={cn('relative', className)}>
-      <Link href={`/product/${product.handle}`} className="block w-full aspect-square" prefetch>
+      <Link
+        href={`/product/${product.handle}`}
+        className="block w-full aspect-square"
+        prefetch
+      >
         <Image
           src={product.featuredImage.url}
           alt={product.featuredImage.altText}

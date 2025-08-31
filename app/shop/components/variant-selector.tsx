@@ -4,7 +4,9 @@ import { Product } from '@/lib/shopify/types';
 export const VariantSelector = ({ product }: { product: Product }) => {
   const { options } = product;
 
-  const hasNoOptionsOrJustOneOption = !options.length || (options.length === 1 && options[0]?.values.length === 1);
+  const hasNoOptionsOrJustOneOption =
+    !options.length ||
+    (options.length === 1 && options[0]?.values.length === 1);
 
   if (hasNoOptionsOrJustOneOption) {
     return null;
@@ -13,7 +15,12 @@ export const VariantSelector = ({ product }: { product: Product }) => {
   return (
     <>
       {options.map(option => (
-        <VariantOptionSelector key={option.id} option={option} product={product} variant="condensed" />
+        <VariantOptionSelector
+          key={option.id}
+          option={option}
+          product={product}
+          variant="condensed"
+        />
       ))}
     </>
   );

@@ -64,7 +64,12 @@ export function AddToCartButton({
 
   const getLoaderSize = () => {
     const buttonSize = buttonProps.size;
-    if (buttonSize === 'sm' || buttonSize === 'icon-sm' || buttonSize === 'icon') return 'sm';
+    if (
+      buttonSize === 'sm' ||
+      buttonSize === 'icon-sm' ||
+      buttonSize === 'icon'
+    )
+      return 'sm';
     if (buttonSize === 'icon-lg') return 'default';
     if (buttonSize === 'lg') return 'lg';
     return 'default';
@@ -87,7 +92,11 @@ export function AddToCartButton({
         type="submit"
         aria-label={!resolvedVariant ? 'Select one' : 'Add to cart'}
         disabled={isDisabled}
-        className={iconOnly ? undefined : 'flex relative justify-between items-center w-full'}
+        className={
+          iconOnly
+            ? undefined
+            : 'flex relative justify-between items-center w-full'
+        }
         {...buttonProps}
       >
         <AnimatePresence initial={false} mode="wait">
@@ -100,7 +109,11 @@ export function AddToCartButton({
               transition={{ duration: 0.15 }}
               className="flex justify-center items-center"
             >
-              {isLoading ? <Loader size={getLoaderSize()} /> : <span className="inline-block">{icon}</span>}
+              {isLoading ? (
+                <Loader size={getLoaderSize()} />
+              ) : (
+                <span className="inline-block">{icon}</span>
+              )}
             </motion.div>
           ) : (
             <motion.div
@@ -142,13 +155,21 @@ export function AddToCart({
   const hasNoVariants = variants.length === 0;
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const selectedVariantId = selectedVariant?.id || defaultVariantId;
-  const isTargetingProduct = pathname.handle === product.id || searchParams.get('pid') === product.id;
+  const isTargetingProduct =
+    pathname.handle === product.id || searchParams.get('pid') === product.id;
 
   const resolvedVariant = useMemo(() => {
     if (hasNoVariants) return getBaseProductVariant(product);
     if (!isTargetingProduct && !defaultVariantId) return undefined;
     return variants.find(variant => variant.id === selectedVariantId);
-  }, [hasNoVariants, product, isTargetingProduct, defaultVariantId, variants, selectedVariantId]);
+  }, [
+    hasNoVariants,
+    product,
+    isTargetingProduct,
+    defaultVariantId,
+    variants,
+    selectedVariantId,
+  ]);
 
   return (
     <AddToCartButton

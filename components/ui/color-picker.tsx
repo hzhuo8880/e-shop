@@ -29,7 +29,9 @@ export function ColorSwatch({
   atLeastOneColorSelected,
 }: ColorSwatchProps) {
   const isDualColor = Array.isArray(color);
-  const displayName = isDualColor ? `${color[0].name} & ${color[1].name}` : color.name;
+  const displayName = isDualColor
+    ? `${color[0].name} & ${color[1].name}`
+    : color.name;
 
   return (
     <button
@@ -50,12 +52,21 @@ export function ColorSwatch({
       {isDualColor ? (
         <>
           {/* Left half */}
-          <div className="absolute top-0 left-0 w-1/2 h-full" style={{ backgroundColor: color[0].value }} />
+          <div
+            className="absolute top-0 left-0 w-1/2 h-full"
+            style={{ backgroundColor: color[0].value }}
+          />
           {/* Right half */}
-          <div className="absolute top-0 right-0 w-1/2 h-full" style={{ backgroundColor: color[1].value }} />
+          <div
+            className="absolute top-0 right-0 w-1/2 h-full"
+            style={{ backgroundColor: color[1].value }}
+          />
         </>
       ) : (
-        <div className="w-full h-full" style={{ backgroundColor: color.value }} />
+        <div
+          className="w-full h-full"
+          style={{ backgroundColor: color.value }}
+        />
       )}
       <span className="sr-only">{displayName}</span>
     </button>
@@ -70,14 +81,23 @@ interface ColorPickerProps {
   className?: string;
 }
 
-export function ColorPicker({ colors, selectedColors, onColorChange, size = 'md', className }: ColorPickerProps) {
+export function ColorPicker({
+  colors,
+  selectedColors,
+  onColorChange,
+  size = 'md',
+  className,
+}: ColorPickerProps) {
   const atLeastOneColor = selectedColors.length > 0;
 
   // Helper function to compare colors for selection state
   const isColorSelected = (color: Color | [Color, Color]) => {
     return selectedColors.some(selectedColor => {
       if (Array.isArray(color) && Array.isArray(selectedColor)) {
-        return color[0].value === selectedColor[0].value && color[1].value === selectedColor[1].value;
+        return (
+          color[0].value === selectedColor[0].value &&
+          color[1].value === selectedColor[1].value
+        );
       } else if (!Array.isArray(color) && !Array.isArray(selectedColor)) {
         return color.value === selectedColor.value;
       }
@@ -90,7 +110,11 @@ export function ColorPicker({ colors, selectedColors, onColorChange, size = 'md'
       <AnimatePresence initial={false}>
         {colors.map((color, index) => (
           <motion.div
-            key={Array.isArray(color) ? `${color[0].value}-${color[1].value}` : color.value}
+            key={
+              Array.isArray(color)
+                ? `${color[0].value}-${color[1].value}`
+                : color.value
+            }
             layout="position"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}

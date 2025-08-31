@@ -1,9 +1,9 @@
 const nextConfig = {
-  /* config options here */
   experimental: {
     inlineCss: true,
     useCache: true,
     clientSegmentCache: true,
+    reactCompiler: true, // Enable React Compiler
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -25,8 +25,7 @@ const nextConfig = {
       },
     ],
   },
-  // Force dynamic rendering for product pages to avoid useSearchParams issues
-  generateStaticParams: false,
+  // Remove the invalid generateStaticParams option
 };
 
 export default nextConfig;

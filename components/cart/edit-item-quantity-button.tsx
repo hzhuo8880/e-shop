@@ -9,7 +9,9 @@ function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
   return (
     <button
       type="submit"
-      aria-label={type === 'plus' ? 'Increase item quantity' : 'Reduce item quantity'}
+      aria-label={
+        type === 'plus' ? 'Increase item quantity' : 'Reduce item quantity'
+      }
       className={clsx(
         'ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80',
         {
@@ -17,12 +19,22 @@ function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
         }
       )}
     >
-      {type === 'plus' ? <Plus className="h-4 w-4" /> : <Minus className="h-4 w-4" />}
+      {type === 'plus' ? (
+        <Plus className="h-4 w-4" />
+      ) : (
+        <Minus className="h-4 w-4" />
+      )}
     </button>
   );
 }
 
-export function EditItemQuantityButton({ item, type }: { item: CartItem; type: 'plus' | 'minus' }) {
+export function EditItemQuantityButton({
+  item,
+  type,
+}: {
+  item: CartItem;
+  type: 'plus' | 'minus';
+}) {
   const { updateItem } = useCart();
   const nextQuantity = type === 'plus' ? item.quantity + 1 : item.quantity - 1;
 

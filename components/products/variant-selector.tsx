@@ -1,7 +1,13 @@
 'use client';
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CartProduct, Product, ProductOption, ProductVariant, SelectedOptions } from '@/lib/shopify/types';
+import {
+  CartProduct,
+  Product,
+  ProductOption,
+  ProductVariant,
+  SelectedOptions,
+} from '@/lib/shopify/types';
 import { startTransition, useMemo } from 'react';
 import { useQueryState, parseAsString } from 'nuqs';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -27,19 +33,30 @@ const variantOptionSelectorVariants = cva('flex items-start gap-4', {
   },
 });
 
-interface VariantOptionSelectorProps extends VariantProps<typeof variantOptionSelectorVariants> {
+interface VariantOptionSelectorProps
+  extends VariantProps<typeof variantOptionSelectorVariants> {
   option: ProductOption;
   product: Product;
 }
 
-export function VariantOptionSelector({ option, variant, product }: VariantOptionSelectorProps) {
+export function VariantOptionSelector({
+  option,
+  variant,
+  product,
+}: VariantOptionSelectorProps) {
   const { variants, options } = product;
   const searchParams = useSearchParams();
   const pathname = useParams<{ handle?: string }>();
   const optionNameLowerCase = option.name.toLowerCase();
 
-  const [selectedValue, setSelectedValue] = useQueryState(optionNameLowerCase, parseAsString.withDefault(''));
-  const [activeProductId, setActiveProductId] = useQueryState('pid', parseAsString.withDefault(''));
+  const [selectedValue, setSelectedValue] = useQueryState(
+    optionNameLowerCase,
+    parseAsString.withDefault('')
+  );
+  const [activeProductId, setActiveProductId] = useQueryState(
+    'pid',
+    parseAsString.withDefault('')
+  );
 
   // Get all current selected options from URL
   const getCurrentSelectedOptions = () => {
@@ -89,10 +106,17 @@ export function VariantOptionSelector({ option, variant, product }: VariantOptio
 
           // Filter out invalid options and check if the option combination is available for sale.
           const filtered = Object.entries(optionParams).filter(([key, value]) =>
-            options.find(option => option.name.toLowerCase() === key && option.values.some(val => val.name === value))
+            options.find(
+              option =>
+                option.name.toLowerCase() === key &&
+                option.values.some(val => val.name === value)
+            )
           );
           const isAvailableForSale = combinations.find(combination =>
-            filtered.every(([key, value]) => combination[key] === value && combination.availableForSale)
+            filtered.every(
+              ([key, value]) =>
+                combination[key] === value && combination.availableForSale
+            )
           );
 
           // The option is active if it's the selected value
@@ -191,14 +215,19 @@ export const useSelectedVariant = (product: Product) => {
   // Find the variant that matches all selected options
   const selectedVariant = Array.isArray(variants)
     ? variants.find((variant: ProductVariant) =>
-        variant.selectedOptions.every(option => option.value === selectedOptions[option.name.toLowerCase()])
+        variant.selectedOptions.every(
+          option => option.value === selectedOptions[option.name.toLowerCase()]
+        )
       )
     : undefined;
 
   return selectedVariant;
 };
 
-export const useProductImages = (product: Product | CartProduct, selectedOptions?: SelectedOptions) => {
+export const useProductImages = (
+  product: Product | CartProduct,
+  selectedOptions?: SelectedOptions
+) => {
   const images = useMemo(() => {
     return Array.isArray(product.images) ? product.images : [];
   }, [product.images]);
@@ -227,7 +256,9 @@ export const useProductImages = (product: Product | CartProduct, selectedOptions
       const altTextLower = image.altText.toLowerCase();
 
       // Check if any selected variant value is mentioned in the alt text
-      return selectedValues.some(value => altTextLower.includes(value.toLowerCase()));
+      return selectedValues.some(value =>
+        altTextLower.includes(value.toLowerCase())
+      );
     });
   }, [optionsObject, images]);
 
@@ -237,7 +268,9 @@ export const useProductImages = (product: Product | CartProduct, selectedOptions
 
     return images.filter(image => {
       return Object.entries(optionsObject || {}).every(([key, value]) =>
-        image.selectedOptions?.some(option => option.name === key && option.value === value)
+        image.selectedOptions?.some(
+          option => option.name === key && option.value === value
+        )
       );
     });
   }, [optionsObject, images]);

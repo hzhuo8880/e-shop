@@ -20,7 +20,10 @@ interface SortDropdownProps {
 }
 
 export function SortDropdown({ className }: SortDropdownProps) {
-  const [sort, setSort] = useQueryState('sort', parseAsString.withOptions({ shallow: false }));
+  const [sort, setSort] = useQueryState(
+    'sort',
+    parseAsString.withOptions({ shallow: false })
+  );
 
   return (
     <Select value={sort ?? undefined} onValueChange={setSort}>

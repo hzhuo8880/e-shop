@@ -14,7 +14,12 @@ export default function ResultsControls({
   className?: string;
 }) {
   return (
-    <div className={cn('grid grid-cols-3 items-center mb-1 w-full pr-sides', className)}>
+    <div
+      className={cn(
+        'grid grid-cols-3 items-center mb-1 w-full pr-sides',
+        className
+      )}
+    >
       {/* Breadcrumb */}
       <ShopBreadcrumb collections={collections} className="ml-1" />
 

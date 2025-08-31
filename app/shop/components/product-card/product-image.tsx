@@ -1,13 +1,19 @@
 'use client';
 
-import { useProductImages, useSelectedVariant } from '@/components/products/variant-selector';
+import {
+  useProductImages,
+  useSelectedVariant,
+} from '@/components/products/variant-selector';
 import { Product } from '@/lib/shopify/types';
 import Image from 'next/image';
 
 export const ProductImage = ({ product }: { product: Product }) => {
   const selectedVariant = useSelectedVariant(product);
 
-  const [variantImage] = useProductImages(product, selectedVariant?.selectedOptions);
+  const [variantImage] = useProductImages(
+    product,
+    selectedVariant?.selectedOptions
+  );
 
   return (
     <Image

@@ -10,7 +10,12 @@ import {
   removeCartLines,
   getCart as getShopifyCart,
 } from '@/lib/shopify/shopify';
-import type { Cart, CartItem, ShopifyCart, ShopifyCartLine } from '@/lib/shopify/types';
+import type {
+  Cart,
+  CartItem,
+  ShopifyCart,
+  ShopifyCartLine,
+} from '@/lib/shopify/types';
 
 // Local adapter utilities to return FE Cart (avoid cyclic deps)
 function adaptCartLine(shopifyLine: ShopifyCartLine): CartItem {
@@ -22,7 +27,9 @@ function adaptCartLine(shopifyLine: ShopifyCartLine): CartItem {
     quantity: shopifyLine.quantity,
     cost: {
       totalAmount: {
-        amount: (parseFloat(merchandise.price.amount) * shopifyLine.quantity).toString(),
+        amount: (
+          parseFloat(merchandise.price.amount) * shopifyLine.quantity
+        ).toString(),
         currencyCode: merchandise.price.currencyCode,
       },
     },
@@ -72,7 +79,9 @@ function adaptCartLine(shopifyLine: ShopifyCartLine): CartItem {
 function adaptCart(shopifyCart: ShopifyCart | null): Cart | null {
   if (!shopifyCart) return null;
 
-  const lines = shopifyCart.lines?.edges?.map((edge: any) => adaptCartLine(edge.node)) || [];
+  const lines =
+    shopifyCart.lines?.edges?.map((edge: any) => adaptCartLine(edge.node)) ||
+    [];
 
   return {
     id: shopifyCart.id,
@@ -82,7 +91,10 @@ function adaptCart(shopifyCart: ShopifyCart | null): Cart | null {
       totalAmount: shopifyCart.cost.totalAmount,
       totalTaxAmount: shopifyCart.cost.totalTaxAmount,
     },
-    totalQuantity: lines.reduce((sum: number, line: CartItem) => sum + line.quantity, 0),
+    totalQuantity: lines.reduce(
+      (sum: number, line: CartItem) => sum + line.quantity,
+      0
+    ),
     lines,
   } satisfies Cart;
 }
@@ -103,7 +115,9 @@ async function getOrCreateCartId(): Promise<string> {
 }
 
 // Add item server action: returns adapted Cart
-export async function addItem(variantId: string | undefined): Promise<Cart | null> {
+export async function addItem(
+  variantId: string | undefined
+): Promise<Cart | null> {
   if (!variantId) return null;
   try {
     const cartId = await getOrCreateCartId();
@@ -118,7 +132,13 @@ export async function addItem(variantId: string | undefined): Promise<Cart | nul
 }
 
 // Update item server action (quantity 0 removes): returns adapted Cart
-export async function updateItem({ lineId, quantity }: { lineId: string; quantity: number }): Promise<Cart | null> {
+export async function updateItem({
+  lineId,
+  quantity,
+}: {
+  lineId: string;
+  quantity: number;
+}): Promise<Cart | null> {
   try {
     const cartId = (await cookies()).get('cartId')?.value;
     if (!cartId) return null;

@@ -17,7 +17,13 @@ export function DeleteItemButton({ item }: { item: CartItem }) {
         updateItem(lineId, merchandiseId, 0, 'delete');
       }}
     >
-      <Button type="submit" size="sm" variant="ghost" aria-label="Remove item" className="px-2 text-sm">
+      <Button
+        type="submit"
+        size="sm"
+        variant="ghost"
+        aria-label="Remove item"
+        className="px-2 text-sm"
+      >
         Remove
       </Button>
     </form>

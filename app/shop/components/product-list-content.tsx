@@ -15,7 +15,10 @@ interface ProductListContentProps {
 }
 
 // Client-side color filtering function
-function filterProductsByColors(products: Product[], colors: string[]): Product[] {
+function filterProductsByColors(
+  products: Product[],
+  colors: string[]
+): Product[] {
   if (!colors || colors.length === 0) {
     return products;
   }
@@ -29,7 +32,8 @@ function filterProductsByColors(products: Product[], colors: string[]): Product[
       // Look for color option in variant
       return variant.selectedOptions.some((option: any) => {
         const isColorOption =
-          option.name.toLowerCase().includes('color') || option.name.toLowerCase().includes('colour');
+          option.name.toLowerCase().includes('color') ||
+          option.name.toLowerCase().includes('colour');
 
         if (!isColorOption) return false;
 
@@ -47,13 +51,16 @@ function filterProductsByColors(products: Product[], colors: string[]): Product[
     // Also check product-level options as fallback
     if (!hasMatchingColor && product.options) {
       const colorOption = product.options.find(
-        (opt: any) => opt.name.toLowerCase().includes('color') || opt.name.toLowerCase().includes('colour')
+        (opt: any) =>
+          opt.name.toLowerCase().includes('color') ||
+          opt.name.toLowerCase().includes('colour')
       );
 
       if (colorOption && colorOption.values) {
         return colorOption.values.some((value: any) => {
           // Handle both string values and object values with .name property
-          const colorValue = typeof value === 'string' ? value : value.name || value.id;
+          const colorValue =
+            typeof value === 'string' ? value : value.name || value.id;
           const optionColor = colorValue.toLowerCase();
           return colors.some(
             selectedColor =>
@@ -71,11 +78,17 @@ function filterProductsByColors(products: Product[], colors: string[]): Product[
   return filteredProducts;
 }
 
-export function ProductListContent({ products, collections }: ProductListContentProps) {
+export function ProductListContent({
+  products,
+  collections,
+}: ProductListContentProps) {
   const { setProducts, setOriginalProducts } = useProducts();
 
   // Get current color filters from URL
-  const [colorFilters] = useQueryState('fcolor', parseAsArrayOf(parseAsString).withDefault([]));
+  const [colorFilters] = useQueryState(
+    'fcolor',
+    parseAsArrayOf(parseAsString).withDefault([])
+  );
 
   // Apply client-side filtering whenever products or color filters change
   const filteredProducts = useMemo(() => {
@@ -93,7 +106,11 @@ export function ProductListContent({ products, collections }: ProductListContent
 
   return (
     <>
-      <ResultsControls className="max-md:hidden" collections={collections} products={filteredProducts} />
+      <ResultsControls
+        className="max-md:hidden"
+        collections={collections}
+        products={filteredProducts}
+      />
 
       {filteredProducts.length > 0 ? (
         <ProductGrid>
@@ -103,7 +120,9 @@ export function ProductListContent({ products, collections }: ProductListContent
         </ProductGrid>
       ) : (
         <Card className="flex mr-sides flex-1 items-center justify-center">
-          <p className="text text-muted-foreground font-medium">No products found</p>
+          <p className="text text-muted-foreground font-medium">
+            No products found
+          </p>
         </Card>
       )}
     </>

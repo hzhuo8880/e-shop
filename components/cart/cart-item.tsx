@@ -35,9 +35,14 @@ export function CartItemCard({ item, onCloseCart }: CartItemProps) {
   );
 
   // Find color option if it exists
-  const colorOption = item.merchandise.selectedOptions.find(option => option.name.toLowerCase() === 'color');
+  const colorOption = item.merchandise.selectedOptions.find(
+    option => option.name.toLowerCase() === 'color'
+  );
 
-  const imgs = useProductImages(item.merchandise.product, item.merchandise.selectedOptions);
+  const imgs = useProductImages(
+    item.merchandise.product,
+    item.merchandise.selectedOptions
+  );
 
   const [renderImage] = imgs;
 
@@ -76,11 +81,21 @@ export function CartItemCard({ item, onCloseCart }: CartItemProps) {
           )}
         </div>
         <div className="flex flex-col gap-2 2xl:gap-3 flex-1">
-          <Link href={merchandiseUrl} onClick={onCloseCart} className="z-30 flex flex-col justify-center" prefetch>
-            <span className="2xl:text-lg font-semibold">{item.merchandise.product.title}</span>
+          <Link
+            href={merchandiseUrl}
+            onClick={onCloseCart}
+            className="z-30 flex flex-col justify-center"
+            prefetch
+          >
+            <span className="2xl:text-lg font-semibold">
+              {item.merchandise.product.title}
+            </span>
           </Link>
           <p className="2xl:text-lg font-semibold">
-            {formatPrice(item.cost.totalAmount.amount, item.cost.totalAmount.currencyCode)}
+            {formatPrice(
+              item.cost.totalAmount.amount,
+              item.cost.totalAmount.currencyCode
+            )}
           </p>
           <div className="flex justify-between items-end mt-auto">
             <div className="flex h-8 flex-row items-center rounded-md border border-neutral-200">

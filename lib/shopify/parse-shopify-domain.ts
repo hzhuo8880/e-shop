@@ -15,7 +15,9 @@ export function parseShopifyDomain(input: string): string | null {
   const cleanInput = input.trim();
 
   // Case 1: Admin URL format - https://admin.shopify.com/store/store-id/
-  const adminUrlMatch = cleanInput.match(/admin\.shopify\.com\/store\/([^/]+)/i);
+  const adminUrlMatch = cleanInput.match(
+    /admin\.shopify\.com\/store\/([^/]+)/i
+  );
   if (adminUrlMatch) {
     const storeId = adminUrlMatch[1];
     return `${storeId}.myshopify.com`;

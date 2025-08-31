@@ -14,7 +14,8 @@ interface ColorFilterProps {
 }
 
 export function ColorFilter({ products = [], className }: ColorFilterProps) {
-  const { availableColors, selectedColors, toggleColor } = useAvailableColors(products);
+  const { availableColors, selectedColors, toggleColor } =
+    useAvailableColors(products);
   const colorCount = useColorFilterCount();
 
   const isLoading = products.length === 0;
@@ -33,12 +34,19 @@ export function ColorFilter({ products = [], className }: ColorFilterProps) {
           className={cn('px-3 py-4 rounded-md bg-muted', className)}
         >
           <h3 className="mb-4 font-semibold">
-            Color {colorCount > 0 && <span className="text-foreground/50">({colorCount})</span>}
+            Color{' '}
+            {colorCount > 0 && (
+              <span className="text-foreground/50">({colorCount})</span>
+            )}
           </h3>
           {isLoading ? (
             <ColorSwatchSkeleton count={4} />
           ) : (
-            <ColorPicker colors={availableColors} selectedColors={selectedColors} onColorChange={toggleColor} />
+            <ColorPicker
+              colors={availableColors}
+              selectedColors={selectedColors}
+              onColorChange={toggleColor}
+            />
           )}
         </motion.div>
       )}

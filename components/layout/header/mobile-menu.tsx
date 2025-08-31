@@ -76,7 +76,12 @@ export default function MobileMenu({ collections }: MobileMenuProps) {
               <div className="flex flex-col p-3 w-full rounded bg-muted md:p-4">
                 <div className="flex justify-between items-baseline pl-2 mb-10">
                   <p className="text-2xl font-semibold">Menu</p>
-                  <Button size="sm" variant="ghost" aria-label="Close cart" onClick={closeMobileMenu}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    aria-label="Close cart"
+                    onClick={closeMobileMenu}
+                  >
                     Close
                   </Button>
                 </div>

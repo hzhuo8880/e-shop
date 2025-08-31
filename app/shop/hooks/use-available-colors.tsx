@@ -55,14 +55,19 @@ const getColorName = (color: Color | [Color, Color]) => {
 };
 
 export function useAvailableColors(products: Product[]) {
-  const [color, setColor] = useQueryState('fcolor', parseAsArrayOf(parseAsString).withDefault([]));
+  const [color, setColor] = useQueryState(
+    'fcolor',
+    parseAsArrayOf(parseAsString).withDefault([])
+  );
 
   // Extract available colors from products using memoization
   const availableColorNames = useMemo(() => {
     const colorSet = new Set<string>();
 
     products.forEach(product => {
-      const colorOption = product.options.find(option => option.name.toLowerCase() === 'color');
+      const colorOption = product.options.find(
+        option => option.name.toLowerCase() === 'color'
+      );
 
       if (colorOption) {
         colorOption.values.forEach((value: any) => {
@@ -71,14 +76,21 @@ export function useAvailableColors(products: Product[]) {
           if (typeof value === 'string') {
             // Raw Shopify format
             colorName = value.toLowerCase();
-          } else if (value && typeof value === 'object' && 'name' in value && typeof value.name === 'string') {
+          } else if (
+            value &&
+            typeof value === 'object' &&
+            'name' in value &&
+            typeof value.name === 'string'
+          ) {
             // SFCC reshaped format
             colorName = value.name.toLowerCase();
           } else {
             return; // Skip invalid values
           }
 
-          const matchingColor = allColors.find(c => c.name.toLowerCase() === colorName);
+          const matchingColor = allColors.find(
+            c => c.name.toLowerCase() === colorName
+          );
           if (matchingColor) {
             colorSet.add(matchingColor.name);
           }
@@ -90,12 +102,16 @@ export function useAvailableColors(products: Product[]) {
   }, [products]);
 
   // Filter to only show available colors
-  const availableColors = allColors.filter(c => availableColorNames.has(c.name));
+  const availableColors = allColors.filter(c =>
+    availableColorNames.has(c.name)
+  );
 
   // Auto-remove unavailable color filters
   useEffect(() => {
     if (color.length > 0) {
-      const validColors = color.filter(colorName => availableColorNames.has(colorName));
+      const validColors = color.filter(colorName =>
+        availableColorNames.has(colorName)
+      );
 
       if (validColors.length !== color.length) {
         setColor(validColors);
@@ -105,7 +121,11 @@ export function useAvailableColors(products: Product[]) {
 
   const toggleColor = (colorInput: Color | [Color, Color]) => {
     const colorName = getColorName(colorInput);
-    setColor(color.includes(colorName) ? color.filter(c => c !== colorName) : [...color, colorName]);
+    setColor(
+      color.includes(colorName)
+        ? color.filter(c => c !== colorName)
+        : [...color, colorName]
+    );
   };
 
   const selectedColors = availableColors.filter(c => color.includes(c.name));

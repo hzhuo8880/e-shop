@@ -1,11 +1,19 @@
-import { ProductCollectionSortKey, ProductSortKey, ShopifyCart, ShopifyCollection, ShopifyProduct } from './types';
+import {
+  ProductCollectionSortKey,
+  ProductSortKey,
+  ShopifyCart,
+  ShopifyCollection,
+  ShopifyProduct,
+} from './types';
 
 import { parseShopifyDomain } from './parse-shopify-domain';
 import { DEFAULT_PAGE_SIZE, DEFAULT_SORT_KEY } from './constants';
 
 const rawStoreDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
 const fallbackStoreDomain = 'v0-template.myshopify.com';
-const SHOPIFY_STORE_DOMAIN = rawStoreDomain ? parseShopifyDomain(rawStoreDomain) : fallbackStoreDomain;
+const SHOPIFY_STORE_DOMAIN = rawStoreDomain
+  ? parseShopifyDomain(rawStoreDomain)
+  : fallbackStoreDomain;
 
 const SHOPIFY_STOREFRONT_API_URL = `https://${SHOPIFY_STORE_DOMAIN}/api/2025-07/graphql.json`;
 
@@ -32,7 +40,9 @@ async function shopifyFetch<T>({
 
     if (!response.ok) {
       const errorBody = await response.text();
-      throw new Error(`Shopify API HTTP error! Status: ${response.status}, Body: ${errorBody}`);
+      throw new Error(
+        `Shopify API HTTP error! Status: ${response.status}, Body: ${errorBody}`
+      );
     }
 
     const json = await response.json();
@@ -134,7 +144,9 @@ export async function getProducts({
 }
 
 // Get single product by handle
-export async function getProduct(handle: string): Promise<ShopifyProduct | null> {
+export async function getProduct(
+  handle: string
+): Promise<ShopifyProduct | null> {
   const query = /* gql */ `
     query getProduct($handle: String!) {
       product(handle: $handle) {
@@ -327,7 +339,13 @@ export async function getCollectionProducts({
     } | null;
   }>({
     query,
-    variables: { handle: collection, first: limit, sortKey, query: searchQuery, reverse },
+    variables: {
+      handle: collection,
+      first: limit,
+      sortKey,
+      query: searchQuery,
+      reverse,
+    },
   });
 
   if (!data.collection) {
@@ -557,7 +575,10 @@ export async function updateCartLines(
 }
 
 // Remove items from cart
-export async function removeCartLines(cartId: string, lineIds: string[]): Promise<ShopifyCart> {
+export async function removeCartLines(
+  cartId: string,
+  lineIds: string[]
+): Promise<ShopifyCart> {
   const query = /* gql */ `
     mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
       cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {

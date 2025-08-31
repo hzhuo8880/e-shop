@@ -7,9 +7,16 @@ interface SearchParamsWrapperProps {
   fallback?: ReactNode;
 }
 
-export function SearchParamsWrapper({ children, fallback }: SearchParamsWrapperProps) {
+export function SearchParamsWrapper({
+  children,
+  fallback,
+}: SearchParamsWrapperProps) {
   return (
-    <Suspense fallback={fallback || <div className="animate-pulse bg-muted h-10 rounded" />}>
+    <Suspense
+      fallback={
+        fallback || <div className="animate-pulse bg-muted h-10 rounded" />
+      }
+    >
       {children}
     </Suspense>
   );

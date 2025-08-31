@@ -15,7 +15,10 @@ interface ShopBreadcrumbProps {
   className?: string;
 }
 
-export function ShopBreadcrumb({ collections, className }: ShopBreadcrumbProps) {
+export function ShopBreadcrumb({
+  collections,
+  className,
+}: ShopBreadcrumbProps) {
   const params = useParams<{ collection: string }>();
   const currentCollection = params.collection;
 
@@ -34,7 +37,9 @@ export function ShopBreadcrumb({ collections, className }: ShopBreadcrumbProps) 
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
-        <BreadcrumbPage className="font-semibold">{renderCategoryBreadcrumb()}</BreadcrumbPage>
+        <BreadcrumbPage className="font-semibold">
+          {renderCategoryBreadcrumb()}
+        </BreadcrumbPage>
       </BreadcrumbList>
     </Breadcrumb>
   );

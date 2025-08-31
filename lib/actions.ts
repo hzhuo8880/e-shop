@@ -17,7 +17,9 @@ export async function checkEnvs(): Promise<{
     };
   }
 
-  const requiredEnvs = [{ name: 'NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN', label: 'Shopify Store Domain' }];
+  const requiredEnvs = [
+    { name: 'NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN', label: 'Shopify Store Domain' },
+  ];
 
   const envs: EnvCheckResult[] = requiredEnvs.map(env => ({
     name: env.name,

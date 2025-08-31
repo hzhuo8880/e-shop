@@ -2,7 +2,11 @@ import { HomeSidebar } from '@/components/layout/sidebar/home-sidebar';
 import { PageLayout } from '@/components/layout/page-layout';
 import { LatestProductCard } from '@/components/products/latest-product-card';
 import { Badge } from '@/components/ui/badge';
-import { getCollectionProducts, getCollections, getProducts } from '@/lib/shopify';
+import {
+  getCollectionProducts,
+  getCollections,
+  getProducts,
+} from '@/lib/shopify';
 import { getLabelPosition } from '../lib/utils';
 import { Product } from '../lib/shopify/types';
 
@@ -13,7 +17,9 @@ export default async function Home() {
 
   try {
     if (collections.length > 0) {
-      featuredProducts = await getCollectionProducts({ collection: collections[0].handle });
+      featuredProducts = await getCollectionProducts({
+        collection: collections[0].handle,
+      });
     } else {
       const allProducts = await getProducts({});
       featuredProducts = allProducts.slice(0, 8);
@@ -39,7 +45,11 @@ export default async function Home() {
           </div>
           {featuredProducts.length > 0 && (
             <>
-              <LatestProductCard className="col-span-2" product={lastProduct} principal />
+              <LatestProductCard
+                className="col-span-2"
+                product={lastProduct}
+                principal
+              />
 
               {restProducts.map((product: any, index: number) => (
                 <LatestProductCard

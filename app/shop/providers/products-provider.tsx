@@ -10,14 +10,18 @@ interface ProductsContextType {
   setOriginalProducts: (products: Product[]) => void;
 }
 
-const ProductsContext = createContext<ProductsContextType | undefined>(undefined);
+const ProductsContext = createContext<ProductsContextType | undefined>(
+  undefined
+);
 
 export function ProductsProvider({ children }: { children: ReactNode }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
 
   return (
-    <ProductsContext.Provider value={{ products, setProducts, originalProducts, setOriginalProducts }}>
+    <ProductsContext.Provider
+      value={{ products, setProducts, originalProducts, setOriginalProducts }}
+    >
       {children}
     </ProductsContext.Provider>
   );

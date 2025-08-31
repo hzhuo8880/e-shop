@@ -5,7 +5,10 @@ import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Product } from '@/lib/shopify/types';
 import { Badge } from '@/components/ui/badge';
-import { useProductImages, useSelectedVariant } from '@/components/products/variant-selector';
+import {
+  useProductImages,
+  useSelectedVariant,
+} from '@/components/products/variant-selector';
 
 interface MobileGallerySliderProps {
   product: Product;

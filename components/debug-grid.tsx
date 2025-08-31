@@ -8,7 +8,9 @@ interface DebugGridProps {
 }
 
 export function DebugGrid({ className }: DebugGridProps) {
-  const [gridState, setGridState] = useState<'hidden' | 'padded' | 'unpadded'>('hidden');
+  const [gridState, setGridState] = useState<'hidden' | 'padded' | 'unpadded'>(
+    'hidden'
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

@@ -24,7 +24,11 @@ export default async function Shop(props: {
       <Suspense
         fallback={
           <>
-            <ResultsControls className="max-md:hidden" collections={[]} products={[]} />
+            <ResultsControls
+              className="max-md:hidden"
+              collections={[]}
+              products={[]}
+            />
             <ProductGrid>
               {Array.from({ length: 12 }).map((_, index) => (
                 <ProductCardSkeleton key={index} />
@@ -33,7 +37,10 @@ export default async function Shop(props: {
           </>
         }
       >
-        <ProductList collection={storeCatalog.rootCategoryId} searchParams={searchParams} />
+        <ProductList
+          collection={storeCatalog.rootCategoryId}
+          searchParams={searchParams}
+        />
       </Suspense>
     </>
   );

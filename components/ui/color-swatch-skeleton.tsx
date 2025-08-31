@@ -7,7 +7,11 @@ interface ColorSwatchSkeletonProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function ColorSwatchSkeleton({ count = 6, className, size = 'md' }: ColorSwatchSkeletonProps) {
+export function ColorSwatchSkeleton({
+  count = 6,
+  className,
+  size = 'md',
+}: ColorSwatchSkeletonProps) {
   return (
     <div className={cn('flex flex-wrap gap-1.5', className)}>
       {Array.from({ length: count }).map((_, index) => (

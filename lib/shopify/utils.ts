@@ -11,7 +11,10 @@ export const formatPrice = (price: string, currencyCode: string): string => {
 };
 
 // Helper for returning the expected error state to actions instead of throwing.
-export const handleFormActionError = (error: unknown, defaultMessage: string) => {
+export const handleFormActionError = (
+  error: unknown,
+  defaultMessage: string
+) => {
   return {
     errors: {
       formErrors: [(error as Error)?.message || defaultMessage],
@@ -23,7 +26,9 @@ export const handleFormActionError = (error: unknown, defaultMessage: string) =>
 export function thumbhashToDataURL(thumbhash: string): string {
   try {
     // Convert base64 thumbhash to Uint8Array
-    const thumbhashData = Uint8Array.from(atob(thumbhash), c => c.charCodeAt(0));
+    const thumbhashData = Uint8Array.from(atob(thumbhash), c =>
+      c.charCodeAt(0)
+    );
 
     // Convert thumbhash to data URL
     return thumbHashToDataURL(thumbhashData);

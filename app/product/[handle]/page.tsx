@@ -24,11 +24,12 @@ import { VariantSelectorSlots } from './components/variant-selector-slots';
 import { MobileGallerySlider } from './components/mobile-gallery-slider';
 import { DesktopGallery } from './components/desktop-gallery';
 
-
 // Enable ISR with 1 minute revalidation
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export async function generateMetadata(props: { params: Promise<{ handle: string }> }): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ handle: string }>;
+}): Promise<Metadata> {
   const params = await props.params;
   const product = await getProduct(params.handle);
 
@@ -63,13 +64,17 @@ export async function generateMetadata(props: { params: Promise<{ handle: string
   };
 }
 
-export default async function ProductPage(props: { params: Promise<{ handle: string }> }) {
+export default async function ProductPage(props: {
+  params: Promise<{ handle: string }>;
+}) {
   const params = await props.params;
   const product = await getProduct(params.handle);
 
   if (!product) return notFound();
 
-  const collection = product.categoryId ? await getCollection(product.categoryId) : null;
+  const collection = product.categoryId
+    ? await getCollection(product.categoryId)
+    : null;
 
   const productJsonLd = {
     '@context': 'https://schema.org',
@@ -79,7 +84,9 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
     image: product.featuredImage.url,
     offers: {
       '@type': 'AggregateOffer',
-      availability: product.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      availability: product.availableForSale
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
       priceCurrency: product.currencyCode,
       highPrice: product.priceRange.maxVariantPrice.amount,
       lowPrice: product.priceRange.minVariantPrice.amount,
@@ -105,7 +112,9 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       <div className="flex flex-col md:grid md:grid-cols-12 md:gap-sides min-h-max">
         {/* Mobile Gallery Slider */}
         <div className="md:hidden col-span-full h-[60vh] min-h-[400px]">
-          <Suspense fallback={<div className="animate-pulse bg-muted h-full rounded" />}>
+          <Suspense
+            fallback={<div className="animate-pulse bg-muted h-full rounded" />}
+          >
             <MobileGallerySlider product={product} />
           </Suspense>
         </div>
@@ -153,7 +162,10 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
                   )}
                   {product.compareAtPrice && (
                     <span className="line-through opacity-30">
-                      {formatPrice(product.compareAtPrice.amount, product.compareAtPrice.currencyCode)}
+                      {formatPrice(
+                        product.compareAtPrice.amount,
+                        product.compareAtPrice.currencyCode
+                      )}
                     </span>
                   )}
                 </p>
@@ -196,7 +208,9 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
 
         {/* Desktop Gallery */}
         <div className="hidden overflow-y-auto relative col-span-7 col-start-6 w-full md:block">
-          <Suspense fallback={<div className="animate-pulse bg-muted h-full rounded" />}>
+          <Suspense
+            fallback={<div className="animate-pulse bg-muted h-full rounded" />}
+          >
             <DesktopGallery product={product} />
           </Suspense>
         </div>

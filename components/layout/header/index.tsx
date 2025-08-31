@@ -47,7 +47,9 @@ export function Header({ collections }: HeaderProps) {
                 href={item.href}
                 className={cn(
                   'font-semibold text-base transition-colors duration-200 uppercase',
-                  pathname === item.href ? 'text-foreground' : 'text-foreground/50'
+                  pathname === item.href
+                    ? 'text-foreground'
+                    : 'text-foreground/50'
                 )}
                 prefetch
               >
