@@ -5,7 +5,6 @@ const nextConfig = {
     useCache: true,
     clientSegmentCache: true,
     // Fix for Next.js 15 useSearchParams Suspense boundary issue
-    missingSuspenseWithCSRBailout: false,
   },
   eslint: {
     ignoreDuringBuilds: true,
