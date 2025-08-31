@@ -24,11 +24,6 @@ import { VariantSelectorSlots } from './components/variant-selector-slots';
 import { MobileGallerySlider } from './components/mobile-gallery-slider';
 import { DesktopGallery } from './components/desktop-gallery';
 
-  } catch (error) {
-    console.error('Error generating static params for products:', error);
-    return [];
-  }
-}
 
 // Enable ISR with 1 minute revalidation
 export const dynamic = "force-dynamic";
