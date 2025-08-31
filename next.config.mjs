@@ -4,7 +4,6 @@ const nextConfig = {
     inlineCss: true,
     useCache: true,
     clientSegmentCache: true,
-    // Fix for Next.js 15 useSearchParams Suspense boundary issue
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -26,6 +25,8 @@ const nextConfig = {
       },
     ],
   },
+  // Force dynamic rendering for product pages to avoid useSearchParams issues
+  generateStaticParams: false,
 };
 
 export default nextConfig;
